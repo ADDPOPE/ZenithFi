@@ -15,12 +15,13 @@ import { formatUnits, type Address } from 'viem';
 import { 
   AERODROME_V3_NFPM, 
   AERODROME_WETH_REI_GAUGE, 
-  AERODROME_BASE_DEPLOY_BLOCK,
   REI_WETH_POOL_ADDRESS,
   nfpmAbi, 
   v3PoolAbi 
 } from '@/constants/contracts';
 import { useWallet } from '@/contexts/WalletContext';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { mockDeFiPositions } from '@/constants/mockData';
 import { getGaugeDeposits, verifyOwnership } from '@/lib/discovery/gaugeDiscovery';
 
 // ── Constants & ABIs ─────────────────────────────────────────────────────────
@@ -92,13 +93,11 @@ function getAmounts(sqrtCurrent: bigint, tickLower: number, tickUpper: number, l
   return [0n, a1];
 }
 
-import { useEnvironment } from '@/contexts/EnvironmentContext';
-import { mockDeFiPositions } from '@/constants/mockData';
-
 // ── Hook ─────────────────────────────────────────────────────────────────────
 
 export function useDeFiPositions() {
-  const { activeAddress } = useWallet();
+  const { smartAccountAddress, eoaAddress } = useWallet();
+  const activeAddress = (smartAccountAddress ?? eoaAddress) as Address | undefined;
   const { isMockMode } = useEnvironment();
   const publicClient = usePublicClient();
   const [discoveredIds, setDiscoveredIds] = useState<string[]>([]);
@@ -112,23 +111,19 @@ export function useDeFiPositions() {
     async function runDiscovery() {
       setIsDiscovering(true);
       try {
-        // Step 1: Scan events
+        // Step 1: Read staked token IDs from the gauge
         const rawIds = await getGaugeDeposits(
-          publicClient!,
-          AERODROME_WETH_REI_GAUGE,
           activeAddress as Address,
-          AERODROME_BASE_DEPLOY_BLOCK
-        );
-
-        // Step 2: Verify ownership
-        const verified = await verifyOwnership(
-          publicClient!,
-          AERODROME_V3_NFPM,
-          rawIds,
           AERODROME_WETH_REI_GAUGE
         );
 
-        console.log('[useDeFiPositions] Discovery Complete:', verified);
+        // Step 2: Verify ownership per token
+        const verified: string[] = [];
+        for (const tokenId of rawIds) {
+          const ok = await verifyOwnership(tokenId, activeAddress as Address);
+          if (ok) verified.push(tokenId.toString());
+        }
+
         setDiscoveredIds(verified);
       } catch (err) {
         console.error('[useDeFiPositions] Discovery Failed:', err);
