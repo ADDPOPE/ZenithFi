@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useWallet } from '@/contexts/WalletContext';
-import { useDeFiPositions } from '@/hooks/useDeFiPositions';
+import { useDeFiPositions, type DiscoveredPosition } from '@/hooks/useDeFiPositions';
 import { useOnChainBalances } from '@/hooks/useOnChainBalances';
 import {
   Layers,
@@ -28,7 +28,7 @@ function fmt(n: number) {
 
 // ── DeFi Position Card ────────────────────────────────────────────────────────
 
-const DeFiPositionCard: React.FC<{ pos: any }> = ({ pos }) => {
+const DeFiPositionCard: React.FC<{ pos: DiscoveredPosition }> = ({ pos }) => {
   const isAerodrome = pos.protocol.includes('Aerodrome');
   const isUniswap = pos.protocol.includes('Uniswap');
   const hasGlow = (isAerodrome || isUniswap) && pos.valueUsd > 0;
