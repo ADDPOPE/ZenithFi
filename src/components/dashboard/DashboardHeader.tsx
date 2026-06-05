@@ -120,10 +120,15 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ sidebarCollapsed }) =
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
+            aria-label="Search portfolio"
             className="bg-transparent text-sm text-white placeholder-gray-500 outline-none flex-1"
           />
           {searchQuery ? (
-            <button onClick={() => setSearchQuery('')} className="text-gray-500 hover:text-gray-300">
+            <button
+              onClick={() => setSearchQuery('')}
+              aria-label="Clear search"
+              className="text-gray-500 hover:text-gray-300"
+            >
               <X size={14} />
             </button>
           ) : (
@@ -166,6 +171,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ sidebarCollapsed }) =
         <div ref={notifRef} className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
+            aria-label="Notifications"
             className="relative w-9 h-9 rounded-lg flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.08] border border-transparent hover:border-white/[0.08] transition-all"
           >
             <Bell size={18} className="text-gray-400" />
@@ -224,6 +230,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ sidebarCollapsed }) =
         <div ref={walletRef} className="relative">
           <button
             onClick={() => setShowWalletMenu(!showWalletMenu)}
+            aria-label="Wallet menu"
             className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all animate-pulse-neon"
             style={{
               background: 'linear-gradient(135deg, rgba(0,212,255,0.12) 0%, rgba(0,255,163,0.08) 100%)',
