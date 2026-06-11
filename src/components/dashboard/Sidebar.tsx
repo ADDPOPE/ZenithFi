@@ -17,7 +17,6 @@ import {
   Rocket,
   Loader2,
   MessageSquare,
-  Bot
 } from 'lucide-react';
 
 export type NavItem = 'overview' | 'vault' | 'defi' | 'yield' | 'history' | 'agent-chat';
@@ -190,6 +189,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNav, onNavChange, collapsed, on
       {/* Collapse toggle */}
       <button
         onClick={onToggleCollapse}
+        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         className={`absolute -right-3 top-20 w-6 h-6 rounded-full bg-[#141836] border border-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all z-50 transition-colors duration-500 ${isSandbox ? 'hover:border-orange-500/30' : 'hover:border-[#00D4FF]/30'}`}
       >
         {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
