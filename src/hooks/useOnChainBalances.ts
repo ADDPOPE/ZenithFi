@@ -82,7 +82,6 @@ export function useOnChainBalances() {
       });
     }
 
-    console.log('[One-Shot Balance] Discovery Complete:', { eth: totalEth, usdc: list.find(l => l.symbol === 'USDC')?.balance || 0 });
     return { assets: list.sort((a, b) => b.usdValue - a.usdValue), ethPrice };
   }, [universalFetch.data, eoaEth.data, saEth.data, tokens, isMockMode]);
 
