@@ -194,6 +194,7 @@ const AppLayout: React.FC = () => {
                   {activeNav === 'defi' && 'Monitor and manage your decentralized finance positions.'}
                   {activeNav === 'yield' && 'Explore yield farming opportunities across DeFi protocols.'}
                   {activeNav === 'history' && 'Review all your on-chain transactions and activity.'}
+                  {activeNav === 'agent-chat' && 'Chat with your ZenithFi strategist about portfolio and yield.'}
                 </p>
               </div>
 
