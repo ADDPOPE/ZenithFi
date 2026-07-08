@@ -215,7 +215,7 @@ const AppLayout: React.FC = () => {
                     </svg>
                   </div>
                   <span className="text-xs text-gray-500">
-                    ZenithFi Dashboard v1.0.0 · Base Mainnet
+                    ZenithFi Dashboard v1.0.5 · Base Mainnet
                   </span>
                 </div>
                 <div className="flex items-center gap-4">
