@@ -84,7 +84,7 @@ const LandingPage: React.FC = () => {
             }}
           >
             <div className="w-1.5 h-1.5 rounded-full bg-[#00FFA3] animate-pulse" />
-            <span className="text-xs font-medium text-[#00D4FF]">Now supporting 12 chains</span>
+            <span className="text-xs font-medium text-[#00D4FF]">Built for Base Mainnet</span>
           </div>
 
           {/* Headline */}
